@@ -45,6 +45,7 @@ vec2 polar(float distance, float rotation) {
 attribute float aIndex;
 attribute float aRandom;
 
+uniform float uTime;
 uniform float uScreenWidth;
 uniform float uScreenHeight;
 uniform float uMouseX;
@@ -55,21 +56,28 @@ uniform vec3 uStrokes[60];
 
 varying float columns;
 
-float cellSizeMax = 10.;
+float cellSizeMax = 18.;
 float cellSizeMin = 4.;
 float cellSize = 10.;
 
+
 float getCellSize(vec3 point) {
+  float diff = cellSizeMax - cellSizeMin;
   // float random = aRandom * 0.025;
   float smallest = 0.;
   for(int i=0; i<60; ++i) {
     vec3 strokePoint = uStrokes[i];
     float strokeDistance = distance(strokePoint, point);
-    float remapped = remap(strokeDistance, 100. * uMouseV, 200. + 200. * uMouseV, 1., 0.) * strokePoint.z;
+    float remapped = remap(strokeDistance, 40. * uMouseV, 100. + 100. * uMouseV, 1., 0.) * strokePoint.z;
     if (remapped > smallest) smallest = remapped;
   }
 
-  float eased = cellSizeMin + sineInOut(smallest) * (cellSizeMax - cellSizeMin) * uMouseV;
-  return eased;
-  // return 1.;
+  float eased = cellSizeMin + sineInOut(smallest) * diff * uMouseV;
+  // return eased;
+
+  float waveY = sin(uTime / 2.2 + point.y / 500.) * diff + cellSizeMin; 
+  float waveX = sin(uTime / 1.2 + point.x / 200.) * diff + cellSizeMin; 
+  float wave = (waveY + waveX) / 2.;
+
+  return mix(wave, eased, uMouseV);
 }

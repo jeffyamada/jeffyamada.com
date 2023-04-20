@@ -77,6 +77,7 @@ const ThreeGrid = ({}: ThreeGridProps) => {
         uMouseY: { value: 0 },
         uMouseV: { value: 0 },
         uScrollTop: { value: 0 },
+        uTime: { value: 0 },
         uIntroProgress: { value: 0 },
         uStrokes: { value: strokesUniformRef.current },
       },
@@ -118,6 +119,7 @@ const ThreeGrid = ({}: ThreeGridProps) => {
   useFrame((state, delta) => {
     const pointMaterial = pointsRef.current?.material as THREE.ShaderMaterial;
     if (pointMaterial?.uniforms) {
+      pointMaterial.uniforms.uTime.value += delta;
       pointMaterial.uniforms.uMouseX.value = mouseRef.current.x;
       pointMaterial.uniforms.uMouseY.value = mouseRef.current.y;
       pointMaterial.uniforms.uMouseV.value = mouseRef.current.v;
