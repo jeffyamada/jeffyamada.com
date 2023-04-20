@@ -1,10 +1,40 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
-import ThreeCanvas from "@/components/ThreeCanvas";
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from 'next/font/google';
+import styled from 'styled-components';
+import ThreeCanvas from 'components/ThreeCanvas';
+import fonts from 'styles/fonts';
+import LinkedinIcon from '@/components/atoms/LinkedinIcon';
+import EmailIcon from '@/components/atoms/EmailIcon';
+import DribbbleIcon from '@/components/atoms/DribbbleIcon';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
+
+const Foreground = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+`;
+
+const TextBox = styled.div`
+  display: inline-block;
+  padding: 20px 32px 22px 20px;
+  margin-top: 20vh;
+  background: black;
+`;
+
+const H1 = styled.h1`
+  font-family: ${fonts.light};
+  font-size: 38px;
+  color: white;
+  padding-left: 4px;
+  padding-bottom: 12px;
+`;
 
 export default function Home() {
   return (
@@ -16,6 +46,20 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ThreeCanvas />
+      <Foreground>
+        <TextBox>
+          <H1>jeff yamada™</H1>
+          <a href="https://www.linkedin.com/in/jeffyamada/" target="_blank">
+            <LinkedinIcon />
+          </a>
+          <a href="mailto:jeff@jeffyamada.com" target="_blank">
+            <EmailIcon />
+          </a>
+          <a href="https://dribbble.com/impossible-bureau" target="_blank">
+            <DribbbleIcon />
+          </a>
+        </TextBox>
+      </Foreground>
     </>
   );
 }

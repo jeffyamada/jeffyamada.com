@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'Soehne Leicht';
+  src: url('../public/files/fonts/soehne-leicht.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Soehne Leicht Kursiv';
+  src: url('../public/files/fonts/soehne-leicht-kursiv.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Soehne Buch';
+  src: url('../public/files/fonts/soehne-buch.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Soehne Buch Kursiv';
+  src: url('../public/files/fonts/soehne-buch-kursiv.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Soehne Halbfett';
+  src: url('../public/files/fonts/soehne-halbfett.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Soehne Dreiviertelfett';
+  src: url('../public/files/fonts/soehne-dreiviertelfett.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Soehne Kraftig';
+  src: url('../public/files/fonts/soehne-kraftig.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Soehne Extrafett';
+  src: url('../public/files/fonts/soehne-extrafett.woff2') format('woff2');
+}

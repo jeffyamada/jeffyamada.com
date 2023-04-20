@@ -43,26 +43,27 @@ const ThreeGrid = ({}: ThreeGridProps) => {
 
   const onMouseMove = useCallback(
     (event: MouseEvent) => {
-      const x = event.clientX - size.width / 2;
-      const y = event.clientY - size.height / 2;
+      mouseRef.current.x = event.clientX - size.width / 2;
+      mouseRef.current.y = event.clientY - size.height / 2;
+      addStroke(mouseRef.current.x, -mouseRef.current.y);
+    },
+    [size.width, size.height],
+  );
 
-      gsap.to(mouseRef.current, {
-        x,
-        y,
-        duration: 0.5,
-        // onUpdate: () => {
-        // },
-      });
-
-      mouseRef.current.v += 0.005;
-      mouseRef.current.v = Math.min(mouseRef.current.v, 1);
-
-      addStroke(x, -y);
+  const onTouchMove = useCallback(
+    (event: TouchEvent) => {
+      if (event.touches.length) {
+        mouseRef.current.x = event.touches[0].clientX - size.width / 2;
+        mouseRef.current.y = event.touches[0].clientY - size.height / 2;
+        addStroke(mouseRef.current.x, -mouseRef.current.y);
+      }
     },
     [size.width, size.height],
   );
 
   const addStroke = (x: number, y: number) => {
+    mouseRef.current.v += 0.005;
+    mouseRef.current.v = Math.min(mouseRef.current.v, 1);
     strokesUniformRef.current.unshift(new THREE.Vector3(x, y, 1));
     strokesUniformRef.current.splice(STROKE_LENGTH);
   };
@@ -99,8 +100,10 @@ const ThreeGrid = ({}: ThreeGridProps) => {
 
   useEffect(() => {
     global?.window.addEventListener('mousemove', onMouseMove);
+    global?.window.addEventListener('touchmove', onTouchMove);
     return () => {
       global?.window.removeEventListener('mousemove', onMouseMove);
+      global?.window.removeEventListener('touchmove', onTouchMove);
     };
   }, [size.width, size.height]);
 
