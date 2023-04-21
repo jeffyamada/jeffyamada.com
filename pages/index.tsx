@@ -52,7 +52,7 @@ const H1 = styled.h1`
 
 export default function Home() {
   const { fontsLoaded } = useContext(AppContext);
-  const textBoxRef = useRef<HTMLDivElement>();
+  const textBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!textBoxRef?.current) return;
