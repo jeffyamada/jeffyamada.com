@@ -6,11 +6,13 @@ import { createDerivedMaterial } from 'troika-three-utils';
 import vertexDefs from './shaders/vertexDefs.glsl';
 import vertexTransform from './shaders/vertexTransform.glsl';
 import vertexMainOutro from './shaders/vertexMainOutro.glsl';
+import fragmentDefs from './shaders/fragmentDefs.glsl';
 import fragmentColorTransform from './shaders/fragmentColorTransform.glsl';
 // import fragmentShader from './shaders/fragmentShader.glsl';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import { gsap } from 'gsap';
+import { AppContext } from 'pages/_app';
 
 const TOTAL_DOTS = 60000;
 const positions = new Float32Array(_.map(_.range(0, TOTAL_DOTS * 3), () => 0));
@@ -29,6 +31,7 @@ const ROW_HEIGHT = 4;
 const STROKE_LENGTH = 60;
 
 const ThreeGrid = ({}: ThreeGridProps) => {
+  const { fontsLoaded } = useContext(AppContext);
   const { size } = useThree();
   const groupRef = useRef<Group>(null);
   const pointsRef = useRef<Points>(null);
@@ -43,9 +46,14 @@ const ThreeGrid = ({}: ThreeGridProps) => {
 
   const onMouseMove = useCallback(
     (event: MouseEvent) => {
-      mouseRef.current.x = event.clientX - size.width / 2;
-      mouseRef.current.y = event.clientY - size.height / 2;
-      addStroke(mouseRef.current.x, -mouseRef.current.y);
+      const x = event.clientX - size.width / 2;
+      const y = event.clientY - size.height / 2;
+      gsap.to(mouseRef.current, {
+        x,
+        y,
+        duration: 0.2,
+        onUpdate: updateStroke,
+      });
     },
     [size.width, size.height],
   );
@@ -53,13 +61,22 @@ const ThreeGrid = ({}: ThreeGridProps) => {
   const onTouchMove = useCallback(
     (event: TouchEvent) => {
       if (event.touches.length) {
-        mouseRef.current.x = event.touches[0].clientX - size.width / 2;
-        mouseRef.current.y = event.touches[0].clientY - size.height / 2;
-        addStroke(mouseRef.current.x, -mouseRef.current.y);
+        const x = event.touches[0].clientX - size.width / 2;
+        const y = event.touches[0].clientY - size.height / 2;
+        gsap.to(mouseRef.current, {
+          x,
+          y,
+          duration: 0.5,
+          onUpdate: updateStroke,
+        });
       }
     },
     [size.width, size.height],
   );
+
+  const updateStroke = () => {
+    addStroke(mouseRef.current.x, -mouseRef.current.y);
+  };
 
   const addStroke = (x: number, y: number) => {
     mouseRef.current.v += 0.005;
@@ -84,7 +101,7 @@ const ThreeGrid = ({}: ThreeGridProps) => {
       vertexDefs,
       vertexTransform,
       vertexMainOutro,
-      // fragmentDefs: defs,
+      fragmentDefs,
       fragmentColorTransform,
     });
 
@@ -98,6 +115,16 @@ const ThreeGrid = ({}: ThreeGridProps) => {
   useEffect(() => {
     createMaterial();
   }, []);
+
+  useEffect(() => {
+    const pointMaterial = pointsRef.current?.material as THREE.ShaderMaterial;
+    if (!pointMaterial?.uniforms) return;
+    gsap.to(pointMaterial.uniforms.uIntroProgress, {
+      value: 1,
+      duration: 4,
+      delay: 1,
+    });
+  }, [fontsLoaded]);
 
   useEffect(() => {
     global?.window.addEventListener('mousemove', onMouseMove);

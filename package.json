@@ -46,6 +46,7 @@
     "@storybook/nextjs": "^7.0.4",
     "@storybook/react": "^7.0.4",
     "@storybook/testing-library": "^0.0.14-next.2",
+    "@types/fontfaceobserver": "^2.1.0",
     "@types/lodash": "^4.14.192",
     "@types/styled-components": "^5.1.26",
     "eslint-plugin-storybook": "^0.6.11",

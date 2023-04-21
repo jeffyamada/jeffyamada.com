@@ -7,6 +7,9 @@ import fonts from 'styles/fonts';
 import LinkedinIcon from '@/components/atoms/LinkedinIcon';
 import EmailIcon from '@/components/atoms/EmailIcon';
 import DribbbleIcon from '@/components/atoms/DribbbleIcon';
+import { useContext, useEffect, useRef } from 'react';
+import { AppContext } from 'pages/_app';
+import { gsap, Expo } from 'gsap';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,20 +26,50 @@ const Foreground = styled.div`
 
 const TextBox = styled.div`
   display: inline-block;
-  padding: 20px 32px 22px 20px;
-  margin-top: 20vh;
   background: black;
+  margin-top: 20vh;
+  transform: translateX(-100%);
+
+  overflow: hidden;
+  height: 2px;
+`;
+
+const TextContent = styled.div`
+  padding: 20px 48px 22px 32px;
+`;
+
+const Icons = styled.div`
+  padding-left: 8px;
 `;
 
 const H1 = styled.h1`
   font-family: ${fonts.light};
-  font-size: 38px;
+  font-size: 50px;
   color: white;
-  padding-left: 4px;
+  padding-left: 14px;
   padding-bottom: 12px;
 `;
 
 export default function Home() {
+  const { fontsLoaded } = useContext(AppContext);
+  const textBoxRef = useRef<HTMLDivElement>();
+
+  useEffect(() => {
+    if (!textBoxRef?.current) return;
+    gsap.to(textBoxRef?.current, {
+      x: 0,
+      duration: 1,
+      delay: 1,
+      ease: Expo.easeInOut,
+    });
+    gsap.to(textBoxRef?.current, {
+      height: 'auto',
+      duration: 1.2,
+      delay: 1.6,
+      ease: Expo.easeInOut,
+    });
+  }, [fontsLoaded]);
+
   return (
     <>
       <Head>
@@ -47,17 +80,21 @@ export default function Home() {
       </Head>
       <ThreeCanvas />
       <Foreground>
-        <TextBox>
-          <H1>jeff yamada™</H1>
-          <a href="https://www.linkedin.com/in/jeffyamada/" target="_blank">
-            <LinkedinIcon />
-          </a>
-          <a href="mailto:jeff@jeffyamada.com" target="_blank">
-            <EmailIcon />
-          </a>
-          <a href="https://dribbble.com/impossible-bureau" target="_blank">
-            <DribbbleIcon />
-          </a>
+        <TextBox ref={textBoxRef}>
+          <TextContent>
+            <H1>jeffyamada™</H1>
+            <Icons>
+              <a href="https://www.linkedin.com/in/jeffyamada/" target="_blank">
+                <LinkedinIcon />
+              </a>
+              <a href="mailto:jeff@jeffyamada.com" target="_blank">
+                <EmailIcon />
+              </a>
+              <a href="https://dribbble.com/impossible-bureau" target="_blank">
+                <DribbbleIcon />
+              </a>
+            </Icons>
+          </TextContent>
         </TextBox>
       </Foreground>
     </>
