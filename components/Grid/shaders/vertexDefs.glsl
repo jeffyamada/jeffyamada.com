@@ -78,7 +78,7 @@ float getCellSize(vec3 point) {
   float eased = cellSizeMin + sineInOut(smallest) * diff * 1.2 * uMouseV;
   // return eased;
 
-  float waveY = sin(uTime) * 4. * sin(uTime / 2.2 + point.y / 500.) * diff; 
+  float waveY = sin(uTime / 2.) * 4. * sin(uTime / 2.2 + point.y / 500.) * diff; 
   float waveX = sin(uTime / 1.2 + point.x / 200.) * diff + cellSizeMin; 
   float wave = (waveY + waveX) / 2.;
 
