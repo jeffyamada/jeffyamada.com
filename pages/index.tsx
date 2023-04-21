@@ -32,6 +32,11 @@ const TextBox = styled.div`
 
   overflow: hidden;
   height: 2px;
+  /* opacity: 0; */
+
+  .font-loaded & {
+    opacity: 1;
+  }
 `;
 
 const TextContent = styled.div`
