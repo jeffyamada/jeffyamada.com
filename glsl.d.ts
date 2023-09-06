@@ -3,4 +3,4 @@ declare module '*.glsl' {
   export default value;
 }
 
-declare module 'troika-three-utils';
+declare module 'troika-three-text';

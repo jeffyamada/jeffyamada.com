@@ -6,7 +6,8 @@ import { extend } from '@react-three/fiber';
 
 // import { MeshLine, MeshLineMaterial } from 'three.meshline';
 import styled from 'styled-components';
-import ThreeGrid from '../Grid/inde';
+import ThreeGrid from '../Grid';
+import MaskedText from '../MaskedText';
 
 // extend({ MeshLine, MeshLineMaterial });
 
@@ -18,7 +19,7 @@ const ThreeDiv = styled.div`
   top: 0;
   width: 100vw;
   height: 100vh;
-  background: white;
+  background: black;
 `;
 
 const ThreeCanvas = ({}: ThreeCanvasProps) => {
@@ -31,7 +32,8 @@ const ThreeCanvas = ({}: ThreeCanvasProps) => {
       <Canvas dpr={[dpr, dpr]} ref={canvasRef}>
         <CameraSettings />
         {/* <Signature /> */}
-        <ThreeGrid />
+        {/* <ThreeGrid /> */}
+        <MaskedText />
       </Canvas>
     </ThreeDiv>
   );

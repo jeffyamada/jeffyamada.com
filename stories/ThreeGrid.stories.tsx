@@ -4,7 +4,7 @@ import CameraSettings from 'components/ThreeCanvas/CameraSettings';
 import Stroke from 'components/Signature2/Stroke';
 import styled from 'styled-components';
 import jeffSignature from 'components/Signature2/jeff-signature.json';
-import ThreeGrid from '@/components/Grid/inde';
+import ThreeGrid from '@/components/Grid';
 
 export interface StoryProps {
   // open?: boolean;

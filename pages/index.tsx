@@ -25,6 +25,9 @@ const Foreground = styled.div`
 `;
 
 const TextBox = styled.div`
+  position: fixed;
+  bottom: 20vh;
+  left: calc(50vw - 40px);
   display: inline-block;
   background: black;
   margin-top: 20vh;
@@ -40,20 +43,20 @@ const TextBox = styled.div`
 `;
 
 const TextContent = styled.div`
-  padding: 20px 48px 22px 32px;
+  padding: 20px 28px 20px 12px;
 `;
 
 const Icons = styled.div`
   padding-left: 8px;
 `;
 
-const H1 = styled.h1`
-  font-family: ${fonts.light};
-  font-size: 50px;
-  color: white;
-  padding-left: 14px;
-  padding-bottom: 12px;
-`;
+// const H1 = styled.h1`
+//   font-family: ${fonts.light};
+//   font-size: 50px;
+//   color: white;
+//   padding-left: 14px;
+//   padding-bottom: 12px;
+// `;
 
 export default function Home() {
   const { fontsLoaded } = useContext(AppContext);
@@ -87,24 +90,23 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ThreeCanvas />
-      <Foreground>
-        <TextBox ref={textBoxRef}>
-          <TextContent>
-            <H1>jeffyamada™</H1>
-            <Icons>
-              <a href="https://www.linkedin.com/in/jeffyamada/" target="_blank">
-                <LinkedinIcon />
-              </a>
-              <a href="mailto:jeff@jeffyamada.com" target="_blank">
-                <EmailIcon />
-              </a>
-              <a href="https://dribbble.com/impossible-bureau" target="_blank">
-                <DribbbleIcon />
-              </a>
-            </Icons>
-          </TextContent>
-        </TextBox>
-      </Foreground>
+      {/* <Foreground> */}
+      <TextBox ref={textBoxRef}>
+        <TextContent>
+          <Icons>
+            <a href="https://www.linkedin.com/in/jeffyamada/" target="_blank">
+              <LinkedinIcon />
+            </a>
+            <a href="mailto:jeff@jeffyamada.com" target="_blank">
+              <EmailIcon />
+            </a>
+            <a href="https://dribbble.com/impossible-bureau" target="_blank">
+              <DribbbleIcon />
+            </a>
+          </Icons>
+        </TextContent>
+      </TextBox>
+      {/* </Foreground> */}
     </>
   );
 }
