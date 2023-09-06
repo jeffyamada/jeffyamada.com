@@ -89,6 +89,7 @@ const MaskedContent = React.forwardRef<Ref, MaskedContentProps>(
           text={text}
           font={font}
           fontSize={fontSize}
+          lineHeight={0.6}
           anchorX="center"
           anchorY="middle"
           glyphGeometryDetail={10}
@@ -139,17 +140,23 @@ const MaskText = ({
       },
       {
         z: 0,
-        duration: 1.25,
-        delay: 2 + index * 0.05,
+        duration: 4,
+        delay: 2 + index * 0.15,
         ease: Expo.easeInOut,
       },
     );
-    gsap.to(contentRef.current.rotation, {
-      z: Math.PI * 2,
-      duration: 1.25,
-      delay: 2 + index * 0.05,
-      ease: Expo.easeOut,
-    });
+    gsap.fromTo(
+      contentRef.current.rotation,
+      {
+        z: Math.PI,
+      },
+      {
+        z: 0,
+        duration: 2,
+        delay: 2 + index * 0.15,
+        ease: Expo.easeOut,
+      },
+    );
   }, []);
 
   // useFrame(() => {
@@ -192,13 +199,17 @@ const MaskedText = () => {
     const screenMax = Math.max(ww, wh);
     const totalRings = Math.ceil(screenMax / ringSize + 1);
     const masks: JSX.Element[] = [];
+
+    const text = `jeff
+    yamada`;
+
     _.times(totalRings, r => {
       const inner = r * ringSize;
       const outter = r * ringSize + ringSize;
       const key = `mask-text-${r}`;
       masks.push(
         <MaskText
-          text={'jeffyamada™'}
+          text={text}
           inner={inner}
           outter={outter}
           index={r}
