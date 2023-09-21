@@ -3,8 +3,8 @@ const path = require('path');
 
 const config: StorybookConfig = {
   stories: [
-    '../stories/**/*.mdx',
-    '../stories/**/*.stories.@(js|jsx|ts|tsx)',
+    // '../stories/**/*.mdx',
+    // '../stories/**/*.stories.@(js|jsx|ts|tsx)',
     '../components/**/*.stories.@(js|jsx|ts|tsx)',
     // "../**/**/*.stories.@(js|jsx|ts|tsx)",
   ],

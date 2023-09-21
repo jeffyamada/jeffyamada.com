@@ -10,7 +10,6 @@ import { gsap, Expo } from 'gsap';
 import { createClient } from 'next-sanity';
 import ScrollingPage from '@/components/ScrollingPage';
 import Project from '@/types/schemas/project';
-import JeffPage from '@/components/JeffPage';
 
 const TextBox = styled.div`
   position: fixed;
@@ -73,8 +72,8 @@ const Home = ({ projects }: HomeProps) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <JeffPage />
-      <TextBox ref={textBoxRef}>
+      <ScrollingPage />
+      {/* <TextBox ref={textBoxRef}>
         <TextContent>
           <Icons>
             <a href="https://www.linkedin.com/in/jeffyamada/" target="_blank">
@@ -88,7 +87,7 @@ const Home = ({ projects }: HomeProps) => {
             </a>
           </Icons>
         </TextContent>
-      </TextBox>
+      </TextBox> */}
       {/* </Foreground> */}
     </>
   );
