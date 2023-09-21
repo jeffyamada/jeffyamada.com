@@ -40,7 +40,7 @@ const SplitParagraph = () => {
   });
 
   const renderWords = () => {
-    const text = `Thank you. I've really enjoyed meeting you all and getting a glimpse of what the next chapter of my career could look like working with the team at Apparent. The opportunity work with you has me so excited I've had to build this page to occupy myself. I know some people are built to approach their job as ‘just a job’, but for better or worse I was born with one setting: all in. That said, I'd love to make this happen - so I can go all in doing what I do, with people like you. Also, I hope you have copywriters, because I'm not a copywriter.`;
+    const text = `Thank you. I've really enjoyed meeting you and getting a glimpse of what the next chapter of my career could look like working with the team at Apparent. The opportunity to work with you has me so excited I've had to build this page to occupy myself. I know some people are built to approach their job as ‘just a job’, but for better or worse I was born with one setting: all in. That said, I'd love to make this happen - so I can go all in doing what I do, with people like you. Also, I hope you have copywriters, because I'm not a copywriter.`;
 
     return _.map(text.split(' '), (word, index) => {
       return (
