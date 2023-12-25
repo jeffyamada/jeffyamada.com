@@ -12,7 +12,7 @@ import MaskedText from '../three/MaskedText';
 // extend({ MeshLine, MeshLineMaterial });
 
 export type ThreeCanvasProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 const ThreeDiv = styled.div`
