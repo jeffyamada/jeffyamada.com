@@ -93,7 +93,7 @@ const ScrollingPage = () => {
             end={100}
           /> */}
         </ThreeCanvas>
-        <SplitParagraph />
+        {/* <SplitParagraph /> */}
         <ScrollIcon />
       </Container>
     </ScrollPageContext.Provider>
