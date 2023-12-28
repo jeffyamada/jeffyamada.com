@@ -43,14 +43,26 @@ export type YearProps = {
   velocity: {
     current: number;
   };
+  outline?: boolean;
 };
 
 type Ref = THREE.Group;
 
 const Year = React.forwardRef<Ref, YearProps>(
-  ({ text = '', start = 0, end = 400, velocity = { current: 0 } }, ref) => {
+  (
+    {
+      text = '',
+      start = 0,
+      end = 400,
+      velocity = { current: 0 },
+      outline = false,
+    },
+    ref,
+  ) => {
     const textRef = useRef<typeof TroikaText>();
     const materialRef = useRef<THREE.MeshBasicMaterial>(null);
+
+    const [textSize, setTextSize] = useState({ width: 0, height: 0 });
     const { screenWidth, screenHeight } = useScreenSize();
     const { size } = useThree();
 
@@ -77,6 +89,8 @@ const Year = React.forwardRef<Ref, YearProps>(
           uTextHeight: { value: fontSize * 0.72 },
           uAnimationProgress: { value: 1 },
           uVelocity: { value: 0 },
+          uTextWidth: { value: 0 },
+          uOpacity: { value: 0 },
         },
         vertexDefs: defs,
         vertexTransform,
@@ -90,25 +104,25 @@ const Year = React.forwardRef<Ref, YearProps>(
 
     useEffect(() => {
       const minScreen = Math.min(screenWidth, screenHeight);
-      setFontSize(minScreen / 2.5);
+      setFontSize(minScreen / 5);
     }, [screenWidth, screenHeight, setFontSize]);
 
     useFrame((state, delta) => {
-      // return;
       const textMaterial = textRef.current?.material as THREE.ShaderMaterial;
       if (textMaterial?.uniforms) {
         textMaterial.uniforms.uTime.value += delta;
         textMaterial.uniforms.uTextHeight.value = fontSize * 0.72;
         textMaterial.uniforms.uAnimationProgress.value = scrollYProgress.get();
         textMaterial.uniforms.uVelocity.value = velocity?.current || 0;
+        textMaterial.uniforms.uTextWidth.value = screenWidth;
+        textMaterial.uniforms.uOpacity.value = outline ? 0.25 : 1;
       }
     });
 
     useEffect(() => {
-      if (!textRef.current) return;
-
+      if (!textRef.current || isReady) return;
       textRef.current.material = createTextMaterial();
-      const options = { font, sdfGlyphSize: 120 };
+      const options = { font, sdfGlyphSize: 2 };
       preloadFont(options, () => {
         setIsReady(true);
       });
@@ -124,14 +138,16 @@ const Year = React.forwardRef<Ref, YearProps>(
           anchorX="center"
           anchorY="middle"
           glyphGeometryDetail={20}
-          // curveRadius={-120}
-          // lineHeight={60}
+          lineHeight={fontSize}
+          // color={0xff00dd}
           // strokeColor={0xffffff}
-          // strokeWidth={4}
+          // strokeWidth={outline ? 2 : 0}
         >
           <meshBasicMaterial
-            color={0xffffff}
-            opacity={1}
+            // color={0xffffff}
+            // color={0xff00dd}
+            // color={0xff0000}
+            // opacity={0}
             // {...stencil}
             ref={materialRef}
             // wireframe

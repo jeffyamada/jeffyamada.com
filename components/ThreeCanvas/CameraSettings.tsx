@@ -1,7 +1,7 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import { /* Canvas, */ useThree } from '@react-three/fiber';
 
-const perspective = 600;
+const perspective = 1600;
 
 export const threeSettings = {
   camera: {

@@ -50,5 +50,7 @@ uniform float uTime;
 uniform float uTextHeight;
 uniform float uAnimationProgress;
 uniform float uVelocity;
+uniform float uTextWidth;
+uniform float uOpacity;
 
 varying float cp;

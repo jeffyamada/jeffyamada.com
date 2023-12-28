@@ -21,6 +21,7 @@ const ThreeDiv = styled.div`
   top: 0;
   width: 100vw;
   height: 100vh;
+  /* background: #101138; */
   background: black;
 `;
 

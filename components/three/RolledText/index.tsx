@@ -20,19 +20,14 @@ import useScreenSize from '@/hooks/useScreenSize';
 import _ from 'lodash';
 import Year from './Year';
 import gsap from 'gsap';
-// import gsap, { Expo } from 'gsap';
-// import { ScrollPageContext } from '@/components/ScrollingPage';
-// import useScreenSize from '@/hooks/useScreenSize';
-// import { createDerivedMaterial } from 'troika-three-utils';
-// import vertexTransform from './shaders/vertexTransform.glsl';
-// import fragmentColorTransform from './shaders/fragmentColorTransform.glsl';
-// import defs from './shaders/defs.glsl';
+import { CatmullRomLine } from '@react-three/drei';
 
 type Ref = THREE.Group;
 
 const RolledText = React.forwardRef<Ref>(({}, ref) => {
   const { screenHeight } = useScreenSize();
-  const years = _.range(2012, 2025);
+  const thisYear = new Date().getFullYear();
+  const years = _.range(2012, thisYear + 1);
 
   const scrollTargetRef = useRef<HTMLElement>(
     document.getElementById('page-container'),
@@ -56,7 +51,7 @@ const RolledText = React.forwardRef<Ref>(({}, ref) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const velocity = InertiaPlugin.getVelocity(scrollRef.current, 'y');
-    const clamped = _.clamp(velocity * 0.0005, -0.5, 0.5);
+    const clamped = _.clamp(velocity * 0.0005, -0.25, 0.25);
     gsap.to(velocityRef, {
       current: clamped,
     });
@@ -67,6 +62,8 @@ const RolledText = React.forwardRef<Ref>(({}, ref) => {
       const yearString = year.toString();
       const start = i * 800;
       const end = start + 2800;
+      const outline = thisYear !== year;
+
       return (
         <Year
           text={yearString}
@@ -74,12 +71,31 @@ const RolledText = React.forwardRef<Ref>(({}, ref) => {
           velocity={velocityRef}
           end={end}
           key={yearString}
+          outline={outline}
         />
       );
     });
 
   return (
     <group position={[0, -screenHeight * 0, 0]} ref={ref}>
+      <CatmullRomLine
+        position={[0, 0, -500]}
+        points={[
+          [-250, 0, 0],
+          [0, 0, 0],
+          [0, 250, 0],
+          [250, 250, 0],
+        ]} // Array of Points
+        closed={false} // Default
+        curveType="catmullrom" // One of "centripetal" (default), "chordal", or "catmullrom"
+        tension={0.9} // Default (only applies to "catmullrom" curveType)
+        color={0xffffff}
+        lineWidth={2} // In pixels (default)
+        dashed={false} // Default
+        // vertexColors={[[0, 0, 0], ...]} // Optional array of RGB values for each point
+        // {...lineProps} // All THREE.Line2 props are valid
+        // {...materialProps} // All THREE.LineMaterial props are valid
+      />
       {renderYears()}
     </group>
   );
