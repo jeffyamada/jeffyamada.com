@@ -32,7 +32,7 @@ const ThreeCanvas = ({ children }: ThreeCanvasProps) => {
 
   return (
     <ThreeDiv>
-      <Canvas dpr={[dpr, dpr]} ref={canvasRef}>
+      <Canvas dpr={[dpr, dpr]} ref={canvasRef} flat linear>
         <CameraSettings />
         {children}
       </Canvas>

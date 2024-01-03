@@ -44,7 +44,7 @@ export default class Point {
     return new Point(x, y, z);
   };
 
-  static lerpNum = (ratio: number, a: number, b: number) => {
+  static mix = (ratio: number, a: number, b: number) => {
     const num = a + (b - a) * ratio;
     return num;
   };

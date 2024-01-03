@@ -1,7 +1,8 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { /* Canvas, */ useThree } from '@react-three/fiber';
+import useScreenSize from '@/hooks/useScreenSize';
 
-const perspective = 1600;
+const perspective = 2000;
 
 export const threeSettings = {
   camera: {
@@ -13,26 +14,23 @@ export const threeSettings = {
 
 const CameraSettings = (props: any) => {
   const cameraRef = useRef<THREE.PerspectiveCamera>(null!);
-  const { size, set } = useThree();
+  const { set } = useThree();
+  const { screenWidth: ww, screenHeight: wh } = useScreenSize();
 
-  useLayoutEffect(() => {
-    if (cameraRef.current && !!global?.window) {
-      const { innerWidth: ww, innerHeight: wh } = window;
+  useEffect(() => {
+    if (cameraRef.current) {
       const { perspective, near } = threeSettings.camera;
-
       const fov = (180 * (2 * Math.atan(wh / 2 / perspective))) / Math.PI;
-
       cameraRef.current.fov = fov;
       cameraRef.current.aspect = ww / wh;
       cameraRef.current.near = near;
       cameraRef.current.far = perspective * 10;
       cameraRef.current.position.set(0, 0, perspective);
-
       cameraRef.current.updateProjectionMatrix();
     }
-  }, [size.height, size.width]);
+  }, [wh, ww]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     set({ camera: cameraRef.current });
   }, []);
 
