@@ -26,7 +26,8 @@ const ThreeDiv = styled.div`
 `;
 
 const ThreeCanvas = ({ children }: ThreeCanvasProps) => {
-  const dpr = global?.window?.devicePixelRatio || 1;
+  const dpr = 1;
+  // const dpr = global?.window?.devicePixelRatio || 1;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 

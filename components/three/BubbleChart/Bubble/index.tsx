@@ -103,7 +103,7 @@ const Bubble = React.forwardRef<Ref, Props>(({ circle }, ref) => {
         <group ref={xRef}>
           <group ref={yRef}>
             <Sphere
-              args={[1, 128, 128]}
+              args={[1, 64, 64]}
               rotation={[0, -Math.PI / 2, 0]}
               ref={sphereRef}
             >
@@ -123,7 +123,7 @@ const Bubble = React.forwardRef<Ref, Props>(({ circle }, ref) => {
                     color={0x000000}
                     anchorX="center"
                     anchorY="middle"
-                    scale={[2, 3, 2]}
+                    scale={[2, 2.4, 2]}
                   >
                     BITCOIN $34,000 - 45%
                   </Text>

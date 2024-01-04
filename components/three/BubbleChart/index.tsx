@@ -71,7 +71,7 @@ export default function BubbleChart() {
     if (matterRef.current.circles.length) return;
     const { engine } = matterRef.current;
     const bodies: Body[] = [];
-    _.times(6, i => {
+    _.times(12, i => {
       const options = { restitution: 0, slop: 0.99 };
       const radius = _.random(40, 140);
       const circle = Bodies.circle(0, 0, radius);
