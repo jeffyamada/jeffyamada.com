@@ -24,11 +24,11 @@ const Letters = () => {
   const engineRef = useRef(Engine.create({ gravity: { scale: 0.001 } }));
   const renderRef = useRef<Render>();
 
-  const select = (root, selector) => {
+  const select = (root: Document, selector: string) => {
     return Array.prototype.slice.call(root.querySelectorAll(selector));
   };
 
-  const loadSvg = function (url) {
+  const loadSvg = function (url: string) {
     return fetch(url)
       .then(function (response) {
         return response.text();

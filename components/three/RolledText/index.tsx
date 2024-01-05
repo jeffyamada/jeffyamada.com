@@ -52,9 +52,10 @@ const RolledText = React.forwardRef<Ref>(({}, ref) => {
     // @ts-ignore
     const velocity = InertiaPlugin.getVelocity(scrollRef.current, 'y');
     const clamped = _.clamp(velocity * 0.0005, -0.25, 0.25);
-    gsap.to(velocityRef, {
-      current: clamped,
-    });
+    // gsap.set(velocityRef, {
+    //   current: clamped,
+    // });
+    velocityRef.current = clamped;
   });
 
   const renderYears = () =>
@@ -78,7 +79,7 @@ const RolledText = React.forwardRef<Ref>(({}, ref) => {
 
   return (
     <group position={[0, -screenHeight * 0, 0]} ref={ref}>
-      <CatmullRomLine
+      {/* <CatmullRomLine
         position={[0, 0, -500]}
         points={[
           [-250, 0, 0],
@@ -95,7 +96,7 @@ const RolledText = React.forwardRef<Ref>(({}, ref) => {
         // vertexColors={[[0, 0, 0], ...]} // Optional array of RGB values for each point
         // {...lineProps} // All THREE.Line2 props are valid
         // {...materialProps} // All THREE.LineMaterial props are valid
-      />
+      /> */}
       {renderYears()}
     </group>
   );

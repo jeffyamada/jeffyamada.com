@@ -12,13 +12,14 @@ import {
 } from 'matter-js';
 
 class Letter {
-  body: Body;
+  body: Body | undefined;
+  greeting: string | undefined;
 
-  constructor(letter, svg) {
+  constructor(letter: any, svg: any) {
     const point = Vector.create(0, 0);
   }
 
-  loadSvg = url => {
+  loadSvg = (url: RequestInfo | URL) => {
     return fetch(url)
       .then(function (response) {
         return response.text();

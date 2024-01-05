@@ -115,7 +115,8 @@ const Year = React.forwardRef<Ref, YearProps>(
         textMaterial.uniforms.uAnimationProgress.value = scrollYProgress.get();
         textMaterial.uniforms.uVelocity.value = velocity?.current || 0;
         textMaterial.uniforms.uTextWidth.value = screenWidth;
-        textMaterial.uniforms.uOpacity.value = outline ? 0.25 : 1;
+        // textMaterial.uniforms.uOpacity.value = outline ? 0.25 : 1;
+        textMaterial.uniforms.uOpacity.value = 1;
       }
     });
 
