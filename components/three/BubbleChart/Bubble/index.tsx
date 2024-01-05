@@ -125,7 +125,7 @@ const Bubble = React.forwardRef<Ref, Props>(({ circle }, ref) => {
                     anchorY="middle"
                     scale={[2, 2.4, 2]}
                   >
-                    BITCOIN $34,000 - 45%
+                    WHAT IS THIS? A SCHOOL FOR ANTS?
                   </Text>
                 </RenderTexture>
               </meshToonMaterial>
