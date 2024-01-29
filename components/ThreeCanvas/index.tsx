@@ -22,7 +22,7 @@ const ThreeDiv = styled.div`
   width: 100vw;
   height: 100vh;
   /* background: #101138; */
-  background: black;
+  /* background: black; */
 `;
 
 const ThreeCanvas = ({ children }: ThreeCanvasProps) => {
