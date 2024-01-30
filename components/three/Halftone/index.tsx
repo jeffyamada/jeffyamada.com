@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { useFBO, useTexture } from '@react-three/drei';
+import { useFBO, useScroll, useTexture } from '@react-three/drei';
 import { createDerivedMaterial } from 'troika-three-utils';
 import _ from 'lodash';
 import { useCallback, useEffect, useRef } from 'react';
@@ -11,6 +11,7 @@ import fragmentColorTransform from './shaders/fragmentColorTransform.glsl';
 import { useFrame, useThree } from '@react-three/fiber';
 import { BufferAttribute } from 'three';
 import { folder, useControls } from 'leva';
+import Point from '@/lib/Point';
 
 export type HalftoneProps = {
   children?: React.ReactNode;
@@ -25,6 +26,7 @@ export default function Halftone({ children }: HalftoneProps) {
   const materialRef = useRef<THREE.PointsMaterial>(null);
   const geometryRef = useRef<THREE.BufferGeometry>(null);
   const tonesRef = useRef<THREE.Group>(null);
+  const scroll = useScroll();
 
   const renderTarget = useFBO({});
 
@@ -106,17 +108,26 @@ export default function Halftone({ children }: HalftoneProps) {
     gl.setRenderTarget(null);
 
     const pointMaterial = pointsRef.current?.material as THREE.ShaderMaterial;
+    const progress = scroll.range(0, 1 / 3);
 
     if (pointMaterial?.uniforms) {
-      pointMaterial.uniforms.uTime.value = state.clock.elapsedTime;
-      pointMaterial.uniforms.uScreenWidth.value = size.width;
-      pointMaterial.uniforms.uScreenHeight.value = size.height;
-      pointMaterial.uniforms.uSizeMax.value = uSizeMax;
-      pointMaterial.uniforms.uSizeMin.value = uSizeMin;
-      pointMaterial.uniforms.uSinX.value = uSinX;
-      pointMaterial.uniforms.uSinY.value = uSinY;
-      pointMaterial.uniforms.uSinXAmount.value = uSinXAmount;
-      pointMaterial.uniforms.uSinYAmount.value = uSinYAmount;
+      const { uniforms } = pointMaterial;
+      uniforms.uTime.value = state.clock.elapsedTime;
+      uniforms.uScreenWidth.value = size.width;
+      uniforms.uScreenHeight.value = size.height;
+      uniforms.uSizeMin.value = uSizeMin;
+      uniforms.uSinX.value = uSinX;
+      uniforms.uSinY.value = uSinY;
+      // uniforms.uSinXAmount.value = Point.remap(progress, 0, 1, 10, uSizeMax);
+
+      uniforms.uSizeMax.value = Point.remap(progress, 0, 1, 10, uSizeMax);
+      uniforms.uSinYAmount.value = Point.remap(
+        progress,
+        0,
+        1,
+        0.6,
+        uSinYAmount,
+      );
     }
   });
 

@@ -5,10 +5,9 @@ import Project from '@/types/schemas/project';
 import Halftone from '@/components/three/Halftone';
 import useScreenSize from '@/hooks/useScreenSize';
 import ThreeCanvas from '@/components/ThreeCanvas';
-import { Scroll, ScrollControls, Text } from '@react-three/drei';
-import { useControls, folder } from 'leva';
+import { Scroll, ScrollControls } from '@react-three/drei';
 import _ from 'lodash';
-import { Color, ColorRepresentation } from 'three';
+import HalftoneText from '@/components/three/Halftone/HalftoneText';
 
 const TextBox = styled.div`
   position: fixed;
@@ -49,34 +48,15 @@ const fonts = {
 };
 
 const HalftonePage = ({ projects }: HalftonePageProps) => {
-  // const { fontsLoaded } = useContext(AppContext);
   const { screenWidth: ww, screenHeight: wh } = useScreenSize();
   const [doRender, setRender] = useState(false);
-  const textRef = useRef<Text>(null);
-
-  const { font, fontSize, fillColor, outlineColor } = useControls({
-    Text: folder({
-      font: {
-        value: 'Aeonik Bold',
-        options: _.keys(fonts),
-      },
-      fontSize: {
-        value: 180,
-        min: 10,
-        max: 600,
-        step: 5,
-      },
-      fillColor: '#ffffff',
-      outlineColor: '#ffffff',
-    }),
-  });
 
   useEffect(() => {
     setRender(true);
   }, []);
 
-  const perspective = 2000;
-  const fov = (180 * (2 * Math.atan(wh / 2 / perspective))) / Math.PI;
+  // const perspective = 2000;
+  // const fov = (180 * (2 * Math.atan(wh / 2 / perspective))) / Math.PI;
 
   if (!doRender) return null;
 
@@ -85,21 +65,8 @@ const HalftonePage = ({ projects }: HalftonePageProps) => {
       {/* <color attach="background" args={[0xffffff]} /> */}
       <ScrollControls pages={3} damping={0.1}>
         <Halftone>
-          <Scroll>
-            <Text
-              ref={textRef}
-              font={_.get(fonts, font)}
-              fontSize={fontSize}
-              color={new Color(fillColor as ColorRepresentation)}
-              anchorX="center"
-              anchorY="middle"
-              outlineWidth={8}
-              outlineBlur={40}
-              outlineColor={new Color(outlineColor as ColorRepresentation)}
-            >
-              POSSIBLE
-            </Text>
-          </Scroll>
+          <HalftoneText />
+          <Scroll></Scroll>
         </Halftone>
       </ScrollControls>
     </ThreeCanvas>
