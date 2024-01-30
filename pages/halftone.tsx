@@ -1,17 +1,14 @@
-import Head from 'next/head';
-import styled, { withTheme } from 'styled-components';
-// import ThreeCanvas from 'components/ThreeCanvas';
-// import LinkedinIcon from '@/components/atoms/LinkedinIcon';
-// import EmailIcon from '@/components/atoms/EmailIcon';
-// import DribbbleIcon from '@/components/atoms/DribbbleIcon';
-import { Suspense, useContext, useEffect, useRef, useState } from 'react';
-import { AppContext } from 'pages/_app';
-import { gsap, Expo } from 'gsap';
+import styled from 'styled-components';
+import { useEffect, useRef, useState } from 'react';
 import { createClient } from 'next-sanity';
-// import ScrollingPage from '@/components/ScrollingPage';
 import Project from '@/types/schemas/project';
-import { Canvas } from '@react-three/fiber';
 import Halftone from '@/components/three/Halftone';
+import useScreenSize from '@/hooks/useScreenSize';
+import ThreeCanvas from '@/components/ThreeCanvas';
+import { Scroll, ScrollControls, Text } from '@react-three/drei';
+import { useControls, folder } from 'leva';
+import _ from 'lodash';
+import { Color, ColorRepresentation } from 'three';
 
 const TextBox = styled.div`
   position: fixed;
@@ -43,13 +40,36 @@ export type HalftonePageProps = {
   projects: Project[];
 };
 
-import useScreenSize from '@/hooks/useScreenSize';
-import ThreeCanvas from '@/components/ThreeCanvas';
+const fonts = {
+  'Aonic Air': '/files/fonts/Aeonik-Air.ttf',
+  'Aeonik Bold': '/files/fonts/Aeonik-Bold.ttf',
+  'Aeonik Black': '/files/fonts/Aeonik-Black.ttf',
+  'DMSans Bold': '/files/fonts/DMSans-Bold.woff',
+  'Soehne Extrafett': '/files/fonts/soehne-extrafett.ttf',
+};
 
 const HalftonePage = ({ projects }: HalftonePageProps) => {
   // const { fontsLoaded } = useContext(AppContext);
   const { screenWidth: ww, screenHeight: wh } = useScreenSize();
   const [doRender, setRender] = useState(false);
+  const textRef = useRef<Text>(null);
+
+  const { font, fontSize, fillColor, outlineColor } = useControls({
+    Text: folder({
+      font: {
+        value: 'Aeonik Bold',
+        options: _.keys(fonts),
+      },
+      fontSize: {
+        value: 180,
+        min: 10,
+        max: 600,
+        step: 5,
+      },
+      fillColor: '#ffffff',
+      outlineColor: '#ffffff',
+    }),
+  });
 
   useEffect(() => {
     setRender(true);
@@ -63,7 +83,25 @@ const HalftonePage = ({ projects }: HalftonePageProps) => {
   return (
     <ThreeCanvas>
       {/* <color attach="background" args={[0xffffff]} /> */}
-      <Halftone />
+      <ScrollControls pages={3} damping={0.1}>
+        <Halftone>
+          <Scroll>
+            <Text
+              ref={textRef}
+              font={_.get(fonts, font)}
+              fontSize={fontSize}
+              color={new Color(fillColor as ColorRepresentation)}
+              anchorX="center"
+              anchorY="middle"
+              outlineWidth={8}
+              outlineBlur={40}
+              outlineColor={new Color(outlineColor as ColorRepresentation)}
+            >
+              POSSIBLE
+            </Text>
+          </Scroll>
+        </Halftone>
+      </ScrollControls>
     </ThreeCanvas>
     // <Canvas
     //   camera={{
